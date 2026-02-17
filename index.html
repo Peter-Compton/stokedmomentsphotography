@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stoked Moments Photography</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav id="nav">
+    <a href="#hero" class="nav-logo">STOKED</a>
+    <div class="nav-links">
+      <a href="#gallery">Gallery</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-slideshow" id="hero-slideshow"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Stoked Moments Photography</h1>
+      <p class="hero-sub">Capturing your story, one frame at a time</p>
+      <a href="#gallery" class="btn">View Gallery</a>
+    </div>
+  </section>
+
+  <!-- Gallery Category Nav -->
+  <section id="gallery">
+    <h2 class="section-title">The Gallery</h2>
+    <p class="section-subtitle">Select a category to explore</p>
+
+    <div class="category-grid">
+
+      <div class="category-card" data-category="engagements">
+        <div class="category-preview" id="preview-engagements"></div>
+        <div class="category-info">
+          <h3>Engagements</h3>
+          <p>These are the photos that go on the invitations. The first glimpse your guests get of your love story &mdash; they set the tone for everything to come.</p>
+        </div>
+      </div>
+
+      <div class="category-card" data-category="bridals">
+        <div class="category-preview" id="preview-bridals"></div>
+        <div class="category-info">
+          <h3>Bridals</h3>
+          <p>Arguably the most important photos you&rsquo;ll ever take. These are the ones printed and displayed in your home, set up at the reception venue, and the photos people want to see most. You&rsquo;ll come back to these again and again.</p>
+        </div>
+      </div>
+
+      <div class="category-card" data-category="temple">
+        <div class="category-preview" id="preview-temple"></div>
+        <div class="category-info">
+          <h3>Temple Photos</h3>
+          <p>Fun family photos with everyone together &mdash; bridesmaids, groomsmen, both families. The energy is pure joy and excitement. These get really fun with big groups.</p>
+        </div>
+      </div>
+
+      <div class="category-card" data-category="ceremony">
+        <div class="category-preview" id="preview-ceremony"></div>
+        <div class="category-info">
+          <h3>Wedding Ceremony</h3>
+          <p>This is literally your marriage. The vows, the rings, the first kiss &mdash; these moments deserve to be captured beautifully because you only get them once.</p>
+        </div>
+      </div>
+
+      <div class="category-card" data-category="reception">
+        <div class="category-preview" id="preview-reception"></div>
+        <div class="category-info">
+          <h3>Reception</h3>
+          <p>The celebration. Years from now you&rsquo;ll look back and remember who came to celebrate with you &mdash; the dancing, the toasts, the cake, the sparkler exit.</p>
+        </div>
+      </div>
+
+      <div class="category-card" data-category="family">
+        <div class="category-preview" id="preview-family"></div>
+        <div class="category-info">
+          <h3>Family Photos</h3>
+          <p>The ones that end up on every wall and mantle. Family is everything, and these photos prove it.</p>
+        </div>
+      </div>
+
+      <div class="category-card" data-category="creative">
+        <div class="category-preview" id="preview-creative"></div>
+        <div class="category-info">
+          <h3>Creative Photoshoots</h3>
+          <p>Personal sessions, creative concepts, artistic portraits &mdash; whatever your vision is, we make it happen.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Lightbox Gallery Modal -->
+  <div id="gallery-modal" class="modal hidden">
+    <button class="modal-close" onclick="closeGallery()">&times;</button>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <div class="modal-gallery" id="modal-gallery"></div>
+  </div>
+
+  <!-- Lightbox single image -->
+  <div id="lightbox" class="lightbox hidden" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+    <button class="lightbox-prev" onclick="prevImage(event)">&#8249;</button>
+    <img id="lightbox-img" src="" alt="">
+    <button class="lightbox-next" onclick="nextImage(event)">&#8250;</button>
+  </div>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <h2 class="section-title">Packages &amp; Pricing</h2>
+    <p class="section-subtitle">Transparent pricing for every part of your day</p>
+
+    <!-- Discount Code -->
+    <div class="discount-section">
+      <label for="discount-input">Have a discount code?</label>
+      <div class="discount-row">
+        <input type="text" id="discount-input" placeholder="Enter code">
+        <button onclick="applyDiscount()" class="btn btn-sm">Apply</button>
+      </div>
+      <p id="discount-msg" class="discount-msg"></p>
+    </div>
+
+    <!-- Individual Packages -->
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <h3>Engagements</h3>
+        <div class="price" data-base="700">$700</div>
+        <p>Invitation-worthy photos that set the tone for your wedding.</p>
+      </div>
+
+      <div class="price-card">
+        <h3>Bridals</h3>
+        <div class="price" data-base="900">$900</div>
+        <p>The most important photos &mdash; printed, displayed, and treasured forever.</p>
+      </div>
+
+      <div class="price-card">
+        <h3>Temple / Civil Photos</h3>
+        <div class="price" data-base="900">$900</div>
+        <p>Fun group photos with family, bridesmaids, and groomsmen.</p>
+      </div>
+
+      <div class="price-card">
+        <h3>Wedding Ceremony</h3>
+        <div class="price" data-base="900">$900</div>
+        <p>Your marriage, your vows &mdash; captured beautifully.</p>
+      </div>
+
+      <div class="price-card reception-card">
+        <h3>Reception</h3>
+        <div class="reception-toggle">
+          <button class="toggle-btn active" data-type="indoor" onclick="setReceptionType('indoor')">Indoor &mdash; $2,000</button>
+          <button class="toggle-btn" data-type="outdoor" onclick="setReceptionType('outdoor')">Outdoor &mdash; $1,500</button>
+        </div>
+        <div class="price reception-price" data-base-indoor="2000" data-base-outdoor="1500">$2,000</div>
+
+        <!-- Photo Count Slider -->
+        <div class="slider-section">
+          <label>How many photos do you need?</label>
+          <div class="slider-row">
+            <input type="range" id="photo-slider" min="50" max="1000" value="700" step="10" oninput="updatePhotoCount()">
+            <span id="photo-count" class="photo-count">700</span>
+          </div>
+          <p class="slider-note">Base price includes 700 photos. Fewer = savings. More = small upcharge.</p>
+          <div class="slider-price-adjust" id="slider-adjust"></div>
+        </div>
+
+        <!-- Priority Events -->
+        <div class="priority-section">
+          <label>Prioritize specific moments:</label>
+          <div class="priority-grid">
+            <label class="priority-check"><input type="checkbox" value="Cake Cutting"> Cake Cutting</label>
+            <label class="priority-check"><input type="checkbox" value="Bouquet Toss"> Bouquet Toss</label>
+            <label class="priority-check"><input type="checkbox" value="Sparkler Exit"> Sparkler Exit</label>
+            <label class="priority-check"><input type="checkbox" value="First Dance"> First Dance</label>
+            <label class="priority-check"><input type="checkbox" value="Toasts & Speeches"> Toasts &amp; Speeches</label>
+            <label class="priority-check"><input type="checkbox" value="Venue Details"> Venue Details</label>
+            <label class="priority-check"><input type="checkbox" value="Guest Candids"> Guest Candids</label>
+            <label class="priority-check"><input type="checkbox" value="Dance Floor"> Dance Floor</label>
+          </div>
+        </div>
+
+        <p>Remember who came to celebrate with you.</p>
+      </div>
+
+      <div class="price-card">
+        <h3>Family Photos</h3>
+        <div class="price" data-base="500">$500</div>
+        <p>The ones that end up on every wall.</p>
+      </div>
+
+      <div class="price-card">
+        <h3>Creative Photoshoot</h3>
+        <div class="price" data-base="400">$400</div>
+        <p>Personal sessions, creative concepts, artistic vision.</p>
+      </div>
+
+    </div>
+
+    <!-- Full Wedding Package -->
+    <div class="full-package">
+      <div class="package-badge">Best Value</div>
+      <h3>Complete Wedding Package</h3>
+      <p class="package-desc">Engagements + Bridals + Temple/Civil + Ceremony + Reception</p>
+      <div class="package-compare">
+        <span class="strikethrough">$5,400+ individually</span>
+      </div>
+      <div class="price package-price" data-base="4000" id="package-price">$4,000</div>
+      <p class="package-note">Everything you need, one simple price.</p>
+    </div>
+
+    <!-- Running Total -->
+    <div class="total-section" id="total-section">
+      <h3>Your Estimate</h3>
+      <div id="estimate-details"></div>
+      <div class="total-line">
+        <span>Total:</span>
+        <span id="total-price">$0</span>
+      </div>
+      <div id="discount-applied" class="discount-applied hidden">HOMIES discount applied!</div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2 class="section-title">Let&rsquo;s Work Together</h2>
+    <p class="section-subtitle">Reach out and let&rsquo;s talk about your vision</p>
+    <div class="contact-content">
+      <a href="mailto:hello@stokedphoto.com" class="btn">Get In Touch</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Stoked Photography. All rights reserved.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
