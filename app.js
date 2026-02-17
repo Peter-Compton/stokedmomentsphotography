@@ -8,6 +8,7 @@ const categories = {
   reception:   { folder: 'images/reception',    title: 'Reception',   images: [] },
   family:      { folder: 'images/family',       title: 'Family Photos', images: [] },
   creative:    { folder: 'images/creative',     title: 'Creative Photoshoots', images: [] },
+  artwork:     { folder: 'images/artwork',      title: 'Artwork', images: [] },
 };
 
 // This will be populated by the build script (images.js)
@@ -41,6 +42,10 @@ function openGallery(category) {
   gallery.innerHTML = '';
 
   currentImages = cat.images.map(img => `${cat.folder}/${img}`);
+
+  // Add artwork class for special styling
+  const isArtwork = key === 'artwork';
+  gallery.classList.toggle('artwork-gallery', isArtwork);
 
   currentImages.forEach((src, i) => {
     const img = document.createElement('img');
