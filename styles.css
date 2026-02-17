@@ -150,7 +150,7 @@ a { color: var(--accent); text-decoration: none; }
 .btn-sm { padding: 0.6rem 1.5rem; }
 
 /* ========== Sections ========== */
-section { padding: 6rem 3rem; }
+section { padding: 4rem 3rem; }
 
 .section-title {
   font-family: var(--serif);
@@ -165,7 +165,7 @@ section { padding: 6rem 3rem; }
   color: var(--text-muted);
   font-size: 0.95rem;
   font-weight: 300;
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
   letter-spacing: 0.05em;
 }
 

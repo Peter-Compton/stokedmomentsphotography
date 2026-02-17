@@ -131,6 +131,9 @@ function setReceptionType(type) {
 }
 
 function getReceptionBasePrice() {
+  if (discountActive) {
+    return receptionType === 'indoor' ? 1400 : 1050;
+  }
   return receptionType === 'indoor' ? 2000 : 1500;
 }
 
@@ -144,8 +147,9 @@ function getPhotoAdjustment() {
     // $2 per extra photo above 700
     return Math.round(diff * 2);
   } else {
-    // -$1.50 per photo below 700
-    return Math.round(diff * 1.5);
+    // Bigger savings per photo when discounted
+    const perPhoto = discountActive ? 2 : 1.5;
+    return Math.round(diff * perPhoto);
   }
 }
 
@@ -180,8 +184,10 @@ function updateReceptionPrice() {
   const priceEl = document.querySelector('.reception-price');
 
   if (discountActive) {
-    // Under homie rate, reception is part of the package
-    priceEl.innerHTML = `<span class="original">$${total}</span> Included`;
+    // Show discounted price (not "included" — reception is still separate)
+    const fullBase = receptionType === 'indoor' ? 2000 : 1500;
+    const fullTotal = fullBase + adj;
+    priceEl.innerHTML = `<span class="original">$${fullTotal.toLocaleString()}</span> $${total.toLocaleString()}`;
     priceEl.classList.add('discounted');
   } else {
     priceEl.textContent = `$${total.toLocaleString()}`;
@@ -191,12 +197,21 @@ function updateReceptionPrice() {
 
 function updateAllPrices() {
   // Update individual card prices
-  document.querySelectorAll('.price-card:not(.reception-card) .price').forEach(el => {
+  document.querySelectorAll('.price-card:not(.reception-card)').forEach(card => {
+    const el = card.querySelector('.price');
     const base = parseInt(el.dataset.base);
+    const isBridals = card.querySelector('h3') && card.querySelector('h3').textContent === 'Bridals';
+
     if (discountActive) {
-      const discounted = Math.round(base * 0.5);
-      el.innerHTML = `<span class="original">$${base}</span> $${discounted}`;
-      el.classList.add('discounted');
+      if (isBridals) {
+        // Bridals included with HOMIES code
+        el.innerHTML = `<span class="original">$${base}</span> Included`;
+        el.classList.add('discounted');
+      } else {
+        const discounted = Math.round(base * 0.5);
+        el.innerHTML = `<span class="original">$${base}</span> $${discounted}`;
+        el.classList.add('discounted');
+      }
     } else {
       el.textContent = `$${base}`;
       el.classList.remove('discounted');
