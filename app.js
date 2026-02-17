@@ -4,7 +4,7 @@ const categories = {
   engagements: { folder: 'images/engagements', title: 'Engagements', images: [] },
   bridals:     { folder: 'images/bridals',     title: 'Bridals',     images: [] },
   temple:      { folder: 'images/temple',      title: 'Temple Photos', images: [] },
-  ceremony:    { folder: 'images/ceremony',     title: 'Wedding Ceremony', images: [] },
+  ceremony:    { folder: 'images/ceremony',     title: 'Civil Wedding Ceremony', images: [] },
   reception:   { folder: 'images/reception',    title: 'Reception',   images: [] },
   family:      { folder: 'images/family',       title: 'Family Photos', images: [] },
   creative:    { folder: 'images/creative',     title: 'Creative Photoshoots', images: [] },
@@ -132,7 +132,7 @@ function setReceptionType(type) {
 
 function getReceptionBasePrice() {
   if (discountActive) {
-    return receptionType === 'indoor' ? 1400 : 1050;
+    return receptionType === 'indoor' ? 1500 : 1400;
   }
   return receptionType === 'indoor' ? 2000 : 1500;
 }
@@ -179,7 +179,13 @@ function updateReceptionPrice() {
   const base = getReceptionBasePrice();
   const adj = getPhotoAdjustment();
   let total = base + adj;
-  if (total < 300) total = 300; // minimum
+  // Minimum prices
+  if (discountActive) {
+    const minPrice = receptionType === 'indoor' ? 1500 : 1400;
+    if (total < minPrice) total = minPrice;
+  } else {
+    if (total < 300) total = 300;
+  }
 
   const priceEl = document.querySelector('.reception-price');
 
@@ -200,12 +206,20 @@ function updateAllPrices() {
   document.querySelectorAll('.price-card:not(.reception-card)').forEach(card => {
     const el = card.querySelector('.price');
     const base = parseInt(el.dataset.base);
-    const isEngagements = card.querySelector('h3') && card.querySelector('h3').textContent === 'Engagements';
+    const title = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
+    const isEngagements = title === 'Engagements';
+    const isBridals = title === 'Bridals';
+    const isTemple = title === 'Temple Photos';
+    const isCeremony = title === 'Civil Wedding Ceremony';
 
     if (discountActive) {
       if (isEngagements) {
         // Engagements included with HOMIES code
         el.innerHTML = `<span class="original">$${base}</span> Included`;
+        el.classList.add('discounted');
+      } else if (isBridals || isTemple || isCeremony) {
+        // Bridals, Temple, Ceremony → $500 with HOMIES
+        el.innerHTML = `<span class="original">$${base}</span> $500`;
         el.classList.add('discounted');
       } else {
         const discounted = Math.round(base * 0.5);
