@@ -132,7 +132,7 @@ function setReceptionType(type) {
 
 function getReceptionBasePrice() {
   if (discountActive) {
-    return receptionType === 'indoor' ? 1500 : 1400;
+    return receptionType === 'indoor' ? 1700 : 1300;
   }
   return receptionType === 'indoor' ? 2000 : 1500;
 }
@@ -181,8 +181,7 @@ function updateReceptionPrice() {
   let total = base + adj;
   // Minimum prices
   if (discountActive) {
-    const minPrice = receptionType === 'indoor' ? 1500 : 1400;
-    if (total < minPrice) total = minPrice;
+    if (total < 900) total = 900;
   } else {
     if (total < 300) total = 300;
   }
