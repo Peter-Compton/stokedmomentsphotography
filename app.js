@@ -44,7 +44,7 @@ function openGallery(category) {
   currentImages = cat.images.map(img => `${cat.folder}/${img}`);
 
   // Add artwork class for special styling
-  const isArtwork = key === 'artwork';
+  const isArtwork = category === 'artwork';
   gallery.classList.toggle('artwork-gallery', isArtwork);
 
   currentImages.forEach((src, i) => {
