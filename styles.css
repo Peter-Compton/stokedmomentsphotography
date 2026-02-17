@@ -60,14 +60,15 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .nav-links a {
-  color: var(--text-muted);
-  font-size: 0.8rem;
+  color: rgba(240, 236, 228, 0.85);
+  font-size: 0.85rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   transition: color 0.3s;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
-.nav-links a:hover { color: var(--text); }
+.nav-links a:hover { color: #fff; }
 
 /* ========== Hero ========== */
 #hero {
