@@ -180,7 +180,8 @@ function getReceptionTotal() {
   const adj = getPhotoAdjustment();
   let total = base + adj;
   if (discountActive) {
-    if (total < 700) total = 700;
+    const minPrice = receptionType === 'indoor' ? 700 : 500;
+    if (total < minPrice) total = minPrice;
   } else {
     if (total < 300) total = 300;
   }
@@ -234,21 +235,20 @@ function updatePackagePrice() {
 
 function updateAllPrices() {
   // Update individual card prices
-  document.querySelectorAll('.price-card:not(.reception-card)').forEach(card => {
+  document.querySelectorAll('.price-card:not(.reception-card):not(.package-card)').forEach(card => {
     const el = card.querySelector('.price');
     const base = parseInt(el.dataset.base);
     const title = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
     const isEngagements = title === 'Engagements';
     const isBridals = title === 'Bridals';
-    const isTemple = title === 'Temple Photos';
-    const isCeremony = title === 'Civil Wedding Ceremony';
+    const isTempleCeremony = title === 'Temple / Civil Ceremony';
 
     if (discountActive) {
       if (isEngagements) {
         // Engagements included with HOMIES code
         el.innerHTML = `<span class="original">$${base}</span> Included`;
         el.classList.add('discounted');
-      } else if (isBridals || isTemple || isCeremony) {
+      } else if (isBridals || isTempleCeremony) {
         // Bridals, Temple, Ceremony → $500 with HOMIES
         el.innerHTML = `<span class="original">$${base}</span> $500`;
         el.classList.add('discounted');
@@ -279,9 +279,22 @@ function setPreviewImages() {
   Object.keys(categories).forEach(key => {
     const cat = categories[key];
     if (cat.images.length > 0) {
+      // Gallery preview cards
       const preview = document.getElementById(`preview-${key}`);
       if (preview) {
         preview.style.backgroundImage = `url('${cat.folder}/${cat.images[0]}')`;
+      }
+    }
+  });
+
+  // Set pricing card background images
+  document.querySelectorAll('.price-card[data-bg]').forEach(card => {
+    const bgKey = card.dataset.bg;
+    const cat = categories[bgKey];
+    if (cat && cat.images.length > 0) {
+      const bgEl = card.querySelector('.card-bg');
+      if (bgEl) {
+        bgEl.style.backgroundImage = `url('${cat.folder}/${cat.images[0]}')`;
       }
     }
   });
@@ -311,7 +324,6 @@ const heroImages = [
   'images/hero-20.jpg', // addaboymason-161
   'images/hero-21.jpg', // ashton and summer-27
   'images/hero-22.jpg', // _DSC9076-Edit-21
-  'images/hero-23.jpg', // engaged-140
   'images/hero-24.jpg', // amyandcarson-129
   'images/hero-25.jpg', // engagementsdone-44
   'images/hero-26.jpg', // ld-export

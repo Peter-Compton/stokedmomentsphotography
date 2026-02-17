@@ -128,76 +128,94 @@
       <p id="discount-msg" class="discount-msg"></p>
     </div>
 
-    <!-- Individual Packages -->
+    <!-- Wedding Packages -->
     <div class="pricing-grid">
 
-      <div class="price-card">
-        <h3>Engagements</h3>
-        <div class="price" data-base="700">$700</div>
-        <p>Invitation-worthy photos that set the tone for your wedding.</p>
-      </div>
-
-      <div class="price-card">
-        <h3>Bridals</h3>
-        <div class="price" data-base="900">$900</div>
-        <p>The most important photos &mdash; printed, displayed, and treasured forever.</p>
-      </div>
-
-      <div class="price-card">
-        <h3>Temple Photos</h3>
-        <div class="price" data-base="900">$900</div>
-        <p>Fun group photos with family, bridesmaids, and groomsmen.</p>
-      </div>
-
-      <div class="price-card">
-        <h3>Civil Wedding Ceremony</h3>
-        <div class="price" data-base="900">$900</div>
-        <p>Your marriage, your vows &mdash; captured beautifully.</p>
-      </div>
-
-      <div class="price-card reception-card">
-        <h3>Reception</h3>
-        <div class="reception-toggle">
-          <button class="toggle-btn active" data-type="indoor" onclick="setReceptionType('indoor')">Indoor &mdash; $2,000</button>
-          <button class="toggle-btn" data-type="outdoor" onclick="setReceptionType('outdoor')">Outdoor &mdash; $1,500</button>
+      <div class="price-card has-bg" data-bg="engagements">
+        <div class="card-bg"></div>
+        <div class="card-content">
+          <h3>Engagements</h3>
+          <div class="price" data-base="700">$700</div>
+          <p>Invitation-worthy photos that set the tone for your wedding.</p>
         </div>
-        <div class="price reception-price" data-base-indoor="2000" data-base-outdoor="1500">$2,000</div>
+      </div>
 
-        <!-- Photo Count Slider -->
-        <div class="slider-section">
-          <label>How many photos do you need?</label>
-          <div class="slider-row">
-            <input type="range" id="photo-slider" min="50" max="1000" value="700" step="10" oninput="updatePhotoCount()">
-            <span id="photo-count" class="photo-count">700</span>
+      <div class="price-card has-bg" data-bg="bridals">
+        <div class="card-bg"></div>
+        <div class="card-content">
+          <h3>Bridals</h3>
+          <div class="price" data-base="900">$900</div>
+          <p>The most important photos &mdash; printed, displayed, and treasured forever.</p>
+        </div>
+      </div>
+
+      <div class="price-card has-bg" data-bg="temple">
+        <div class="card-bg"></div>
+        <div class="card-content">
+          <h3>Temple / Civil Ceremony</h3>
+          <div class="price" data-base="900">$900</div>
+          <p>Group photos, vows, rings &mdash; your ceremony captured beautifully.</p>
+        </div>
+      </div>
+
+      <div class="price-card reception-card has-bg" data-bg="reception">
+        <div class="card-bg"></div>
+        <div class="card-content">
+          <h3>Reception</h3>
+          <div class="reception-toggle">
+            <button class="toggle-btn active" data-type="indoor" onclick="setReceptionType('indoor')">Indoor &mdash; $2,000</button>
+            <button class="toggle-btn" data-type="outdoor" onclick="setReceptionType('outdoor')">Outdoor &mdash; $1,500</button>
           </div>
-          <p class="slider-note">Base price includes 700 photos. Fewer = savings. More = small upcharge.</p>
-          <div class="slider-price-adjust" id="slider-adjust"></div>
+          <div class="price reception-price" data-base-indoor="2000" data-base-outdoor="1500">$2,000</div>
+
+          <!-- Photo Count Slider -->
+          <div class="slider-section">
+            <label>How many photos do you need?</label>
+            <div class="slider-row">
+              <input type="range" id="photo-slider" min="150" max="1000" value="700" step="10" oninput="updatePhotoCount()">
+              <span id="photo-count" class="photo-count">700</span>
+            </div>
+            <p class="slider-note">Base price includes 700 photos. Fewer = savings. More = small upcharge.</p>
+            <div class="slider-price-adjust" id="slider-adjust"></div>
+          </div>
+
+          <p>Remember who came to celebrate with you.</p>
         </div>
-
-        <p>Remember who came to celebrate with you.</p>
       </div>
 
-      <div class="price-card">
-        <h3>Family Photos</h3>
-        <div class="price" data-base="500">$500</div>
-        <p>The ones that end up on every wall.</p>
-      </div>
-
-      <div class="price-card">
-        <h3>Creative Photoshoot</h3>
-        <div class="price" data-base="400">$400</div>
-        <p>Personal sessions, creative concepts, artistic vision.</p>
+      <div class="price-card package-card has-bg" data-bg="bridals">
+        <div class="card-bg"></div>
+        <div class="card-content">
+          <div class="package-badge">Best Value</div>
+          <h3>Complete Wedding Package</h3>
+          <p class="package-desc">Engagements + Bridals + Temple <em>or</em> Civil Ceremony + Reception</p>
+          <div class="price package-price" data-base="4500" id="package-price">$4,500</div>
+          <p class="package-note">Everything you need, one simple price. Adjusts with your reception photo count.</p>
+        </div>
       </div>
 
     </div>
 
-    <!-- Full Wedding Package -->
-    <div class="full-package">
-      <div class="package-badge">Best Value</div>
-      <h3>Complete Wedding Package</h3>
-      <p class="package-desc">Engagements + Bridals + Temple <em>or</em> Civil Ceremony + Reception</p>
-      <div class="price package-price" data-base="4500" id="package-price">$4,500</div>
-      <p class="package-note">Everything you need, one simple price. Adjusts with your reception photo count.</p>
+    <!-- Additional Services -->
+    <h3 class="additional-title">Additional Services</h3>
+    <div class="additional-grid">
+      <div class="price-card has-bg" data-bg="family">
+        <div class="card-bg"></div>
+        <div class="card-content">
+          <h3>Family Photos</h3>
+          <div class="price" data-base="500">$500</div>
+          <p>The ones that end up on every wall.</p>
+        </div>
+      </div>
+
+      <div class="price-card has-bg" data-bg="creative">
+        <div class="card-bg"></div>
+        <div class="card-content">
+          <h3>Creative Photoshoot</h3>
+          <div class="price" data-base="400">$400</div>
+          <p>Personal sessions, creative concepts, artistic vision.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Running Total -->

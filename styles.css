@@ -388,13 +388,40 @@ section { padding: 4rem 3rem; }
 .price-card {
   background: var(--bg);
   border-radius: 8px;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
   border: 1px solid #222;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
 }
 
-.price-card:hover { border-color: var(--accent); }
+.price-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.price-card .card-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.price-card .card-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(10, 10, 10, 0.82);
+  backdrop-filter: blur(2px);
+}
+
+.price-card .card-content {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+}
 
 .price-card h3 {
   font-family: var(--serif);
@@ -552,23 +579,31 @@ input[type="range"]::-webkit-slider-thumb {
   height: 16px;
 }
 
-/* Full package */
-.full-package {
-  max-width: 600px;
-  margin: 0 auto 3rem;
-  background: var(--bg);
-  border: 2px solid var(--accent);
-  border-radius: 12px;
-  padding: 3rem 2rem;
+/* Full package - now inside the grid */
+.package-card {
+  border: 2px solid var(--accent) !important;
+}
+
+.additional-title {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 300;
   text-align: center;
-  position: relative;
+  margin: 3rem auto 1.5rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.additional-grid {
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
 .package-badge {
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: inline-block;
   background: var(--accent);
   color: var(--bg);
   padding: 0.3rem 1.5rem;
@@ -577,13 +612,7 @@ input[type="range"]::-webkit-slider-thumb {
   text-transform: uppercase;
   border-radius: 20px;
   font-weight: 500;
-}
-
-.full-package h3 {
-  font-family: var(--serif);
-  font-size: 1.8rem;
-  font-weight: 300;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .package-desc {
@@ -686,6 +715,7 @@ footer {
   .category-grid { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; }
   .reception-card { grid-column: span 1; }
+  .additional-grid { grid-template-columns: 1fr; }
   .modal { padding: 4rem 1rem 2rem; }
   .modal-gallery { columns: 2; }
   .priority-grid { grid-template-columns: 1fr; }
