@@ -128,12 +128,13 @@
 
     <!-- Email Gate Overlay -->
     <div class="email-gate" id="email-gate">
+      <button class="gate-close" onclick="skipGate()">&times;</button>
       <div class="email-gate-content">
-        <h3>Want to see pricing?</h3>
-        <p>Enter your email and unlock <strong>20% off</strong> your first booking.</p>
+        <h3>Want 20% off?</h3>
+        <p>Drop your email and unlock <strong>20% off</strong> your first booking.</p>
         <div class="email-gate-form">
           <input type="email" id="gate-email" placeholder="Your email address">
-          <button onclick="unlockPricing()" class="btn btn-sm">Unlock Pricing</button>
+          <button onclick="unlockPricing()" class="btn btn-sm">Unlock Discount</button>
         </div>
         <p id="gate-msg" class="gate-msg"></p>
         <button class="gate-skip" onclick="skipGate()">No thanks, just show me pricing</button>

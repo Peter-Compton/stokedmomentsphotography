@@ -365,13 +365,21 @@ section { padding: 4rem 3rem; }
 .email-gate {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(17, 17, 17, 0.6);
-  backdrop-filter: blur(12px);
+  background: rgba(17, 17, 17, 0);
+  backdrop-filter: blur(0px);
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  pointer-events: none;
+  transition: background 0.8s ease, backdrop-filter 0.8s ease;
+}
+
+.email-gate.active {
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(12px);
+  pointer-events: all;
 }
 
 .email-gate.hidden { display: none; }
@@ -379,6 +387,14 @@ section { padding: 4rem 3rem; }
 .email-gate-content {
   text-align: center;
   max-width: 440px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+}
+
+.email-gate.active .email-gate-content {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .email-gate-content h3 {
@@ -424,6 +440,22 @@ section { padding: 4rem 3rem; }
 
 .gate-msg.success { color: #5cb85c; }
 .gate-msg.error { color: #d9534f; }
+
+.gate-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 11;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.gate-close:hover { color: var(--text); }
 
 .gate-skip {
   background: none;

@@ -421,18 +421,27 @@ function unlockPricing() {
   msg.className = 'gate-msg success';
 
   setTimeout(() => {
-    document.getElementById('email-gate').classList.add('hidden');
+    const gate = document.getElementById('email-gate');
+    gate.classList.remove('active');
+    setTimeout(() => gate.classList.add('hidden'), 800);
   }, 800);
 }
 
 function skipGate() {
   localStorage.setItem('stokedUnlocked', 'skipped');
-  document.getElementById('email-gate').classList.add('hidden');
+  const gate = document.getElementById('email-gate');
+  gate.classList.remove('active');
+  setTimeout(() => gate.classList.add('hidden'), 800);
 }
 
-// Check if already unlocked
+// Check if already unlocked, otherwise delay-reveal the gate
 if (localStorage.getItem('stokedUnlocked')) {
   document.getElementById('email-gate').classList.add('hidden');
+} else {
+  // Let them see pricing for 1.5 seconds, then blur in the gate
+  setTimeout(() => {
+    document.getElementById('email-gate').classList.add('active');
+  }, 1500);
 }
 
 // ========== Contact Form ==========
