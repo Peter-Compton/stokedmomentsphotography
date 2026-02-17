@@ -118,6 +118,20 @@
     <h2 class="section-title">Packages &amp; Pricing</h2>
     <p class="section-subtitle">Transparent pricing for every part of your day</p>
 
+    <!-- Email Gate Overlay -->
+    <div class="email-gate" id="email-gate">
+      <div class="email-gate-content">
+        <h3>Want to see pricing?</h3>
+        <p>Enter your email and unlock <strong>20% off</strong> your first booking.</p>
+        <div class="email-gate-form">
+          <input type="email" id="gate-email" placeholder="Your email address">
+          <button onclick="unlockPricing()" class="btn btn-sm">Unlock Pricing</button>
+        </div>
+        <p id="gate-msg" class="gate-msg"></p>
+        <button class="gate-skip" onclick="skipGate()">No thanks, just show me pricing</button>
+      </div>
+    </div>
+
     <!-- Discount Code -->
     <div class="discount-section">
       <label for="discount-input">Have a discount code?</label>
@@ -234,8 +248,28 @@
   <section id="contact">
     <h2 class="section-title">Let&rsquo;s Work Together</h2>
     <p class="section-subtitle">Reach out and let&rsquo;s talk about your vision</p>
-    <div class="contact-content">
-      <a href="mailto:hello@stokedphoto.com" class="btn">Get In Touch</a>
+
+    <div class="contact-grid">
+      <!-- Contact Form -->
+      <div class="contact-form-wrap">
+        <form id="contact-form" onsubmit="submitContact(event)">
+          <input type="text" name="name" placeholder="Your name" required>
+          <input type="email" name="email" placeholder="Your email" required>
+          <input type="text" name="date" placeholder="Wedding date (if known)">
+          <textarea name="message" placeholder="Tell me about your vision..." rows="4" required></textarea>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+        <p id="contact-msg" class="contact-msg"></p>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <div class="contact-item">
+          <h3>Instagram</h3>
+          <a href="https://instagram.com/stoked.moments" target="_blank">@stoked.moments</a>
+        </div>
+        <p class="contact-note">Friends &mdash; you already know the deal. Just text me.<br>Everyone else &mdash; I&rsquo;d love to hear from you.</p>
+      </div>
     </div>
   </section>
 

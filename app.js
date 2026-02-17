@@ -397,4 +397,62 @@ function registerImages(data) {
   });
 }
 
+// ========== Email Gate ==========
+function unlockPricing() {
+  const email = document.getElementById('gate-email').value.trim();
+  const msg = document.getElementById('gate-msg');
+
+  if (!email || !email.includes('@')) {
+    msg.textContent = 'Please enter a valid email.';
+    msg.className = 'gate-msg error';
+    return;
+  }
+
+  // Store the email (could send to a backend later)
+  localStorage.setItem('stokedEmail', email);
+  localStorage.setItem('stokedUnlocked', 'true');
+
+  msg.textContent = '20% off unlocked! Check your pricing below.';
+  msg.className = 'gate-msg success';
+
+  setTimeout(() => {
+    document.getElementById('email-gate').classList.add('hidden');
+  }, 800);
+}
+
+function skipGate() {
+  localStorage.setItem('stokedUnlocked', 'skipped');
+  document.getElementById('email-gate').classList.add('hidden');
+}
+
+// Check if already unlocked
+if (localStorage.getItem('stokedUnlocked')) {
+  document.getElementById('email-gate').classList.add('hidden');
+}
+
+// ========== Contact Form ==========
+function submitContact(e) {
+  e.preventDefault();
+  const form = e.target;
+  const msg = document.getElementById('contact-msg');
+  const name = form.name.value.trim();
+  const email = form.email.value.trim();
+  const date = form.date.value.trim();
+  const message = form.message.value.trim();
+
+  // Build mailto link and open it
+  const subject = encodeURIComponent('Wedding Photography Inquiry from ' + name);
+  const body = encodeURIComponent(
+    'Name: ' + name + '\n' +
+    'Email: ' + email + '\n' +
+    'Wedding Date: ' + (date || 'Not specified') + '\n\n' +
+    message
+  );
+  window.open('mailto:peter.c.compton@gmail.com?subject=' + subject + '&body=' + body);
+
+  msg.textContent = 'Opening your email client... If nothing happens, email peter.c.compton@gmail.com directly.';
+  msg.className = 'contact-msg success';
+  form.reset();
+}
+
 init();
