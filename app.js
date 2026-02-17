@@ -289,11 +289,16 @@ function setPreviewImages() {
 
   // Set pricing card background images
   document.querySelectorAll('.price-card[data-bg]').forEach(card => {
-    const bgKey = card.dataset.bg;
-    const cat = categories[bgKey];
-    if (cat && cat.images.length > 0) {
-      const bgEl = card.querySelector('.card-bg');
-      if (bgEl) {
+    const bgEl = card.querySelector('.card-bg');
+    if (!bgEl) return;
+
+    // Use specific image if provided, otherwise use first image from category
+    if (card.dataset.bgImg) {
+      bgEl.style.backgroundImage = `url('${card.dataset.bgImg}')`;
+    } else {
+      const bgKey = card.dataset.bg;
+      const cat = categories[bgKey];
+      if (cat && cat.images.length > 0) {
         bgEl.style.backgroundImage = `url('${cat.folder}/${cat.images[0]}')`;
       }
     }
