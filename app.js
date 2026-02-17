@@ -175,28 +175,60 @@ function updatePhotoCount() {
   updateReceptionPrice();
 }
 
-function updateReceptionPrice() {
+function getReceptionTotal() {
   const base = getReceptionBasePrice();
   const adj = getPhotoAdjustment();
   let total = base + adj;
-  // Minimum prices
   if (discountActive) {
-    if (total < 900) total = 900;
+    if (total < 700) total = 700;
   } else {
     if (total < 300) total = 300;
   }
+  return total;
+}
 
+function getFullReceptionTotal() {
+  // Non-discounted reception price (for strikethrough display)
+  const fullBase = receptionType === 'indoor' ? 2000 : 1500;
+  const adj = getPhotoAdjustment();
+  let total = fullBase + adj;
+  if (total < 300) total = 300;
+  return total;
+}
+
+function updateReceptionPrice() {
+  const total = getReceptionTotal();
   const priceEl = document.querySelector('.reception-price');
 
   if (discountActive) {
-    // Show discounted price (not "included" — reception is still separate)
-    const fullBase = receptionType === 'indoor' ? 2000 : 1500;
-    const fullTotal = fullBase + adj;
+    const fullTotal = getFullReceptionTotal();
     priceEl.innerHTML = `<span class="original">$${fullTotal.toLocaleString()}</span> $${total.toLocaleString()}`;
     priceEl.classList.add('discounted');
   } else {
     priceEl.textContent = `$${total.toLocaleString()}`;
     priceEl.classList.remove('discounted');
+  }
+
+  updatePackagePrice();
+}
+
+function updatePackagePrice() {
+  const packageEl = document.getElementById('package-price');
+  const receptionPrice = getReceptionTotal();
+  const fullReceptionPrice = getFullReceptionTotal();
+
+  if (discountActive) {
+    // HOMIES: Engagements(0) + Bridals(500) + Temple/Ceremony(500) + Reception(dynamic)
+    const discountedTotal = 0 + 500 + 500 + receptionPrice;
+    // Full price: 700 + 900 + 900 + full reception
+    const fullTotal = 700 + 900 + 900 + fullReceptionPrice;
+    packageEl.innerHTML = `<span class="original">$${fullTotal.toLocaleString()}</span> $${discountedTotal.toLocaleString()}`;
+    packageEl.classList.add('discounted');
+  } else {
+    // No discount: 700 + 900 + 900 + reception
+    const total = 700 + 900 + 900 + receptionPrice;
+    packageEl.textContent = `$${total.toLocaleString()}`;
+    packageEl.classList.remove('discounted');
   }
 }
 
@@ -235,14 +267,7 @@ function updateAllPrices() {
   updateReceptionPrice();
 
   // Update package price
-  const packageEl = document.getElementById('package-price');
-  if (discountActive) {
-    packageEl.innerHTML = '<span class="original">$4,000</span> $2,000';
-    packageEl.classList.add('discounted');
-  } else {
-    packageEl.textContent = '$4,000';
-    packageEl.classList.remove('discounted');
-  }
+  updatePackagePrice();
 
   // Update discount badge in total
   const badge = document.getElementById('discount-applied');
