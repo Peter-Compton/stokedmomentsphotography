@@ -415,7 +415,7 @@ function unlockPricing() {
 
   // Store the email (could send to a backend later)
   localStorage.setItem('stokedEmail', email);
-  localStorage.setItem('stokedUnlocked', 'true');
+  localStorage.setItem('stokedGateDismissed', 'true');
 
   msg.textContent = '20% off unlocked! Check your pricing below.';
   msg.className = 'gate-msg success';
@@ -428,21 +428,36 @@ function unlockPricing() {
 }
 
 function skipGate() {
-  localStorage.setItem('stokedUnlocked', 'skipped');
+  localStorage.setItem('stokedGateDismissed', 'true');
   const gate = document.getElementById('email-gate');
   gate.classList.remove('active');
   setTimeout(() => gate.classList.add('hidden'), 800);
 }
 
-// Check if already unlocked, otherwise delay-reveal the gate
-if (localStorage.getItem('stokedUnlocked')) {
-  document.getElementById('email-gate').classList.add('hidden');
-} else {
-  // Let them see pricing for 1.5 seconds, then blur in the gate
-  setTimeout(() => {
-    document.getElementById('email-gate').classList.add('active');
-  }, 1500);
-}
+// Email gate: trigger when pricing section scrolls into view
+(function() {
+  const gate = document.getElementById('email-gate');
+  if (localStorage.getItem('stokedGateDismissed')) {
+    gate.classList.add('hidden');
+    return;
+  }
+
+  let gateTriggered = false;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !gateTriggered) {
+        gateTriggered = true;
+        // Let them glimpse pricing for 1.5s, then blur
+        setTimeout(() => {
+          gate.classList.add('active');
+        }, 1500);
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.2 });
+
+  observer.observe(document.getElementById('pricing'));
+})();
 
 // ========== Contact Form ==========
 function submitContact(e) {
