@@ -200,11 +200,11 @@ function updateAllPrices() {
   document.querySelectorAll('.price-card:not(.reception-card)').forEach(card => {
     const el = card.querySelector('.price');
     const base = parseInt(el.dataset.base);
-    const isBridals = card.querySelector('h3') && card.querySelector('h3').textContent === 'Bridals';
+    const isEngagements = card.querySelector('h3') && card.querySelector('h3').textContent === 'Engagements';
 
     if (discountActive) {
-      if (isBridals) {
-        // Bridals included with HOMIES code
+      if (isEngagements) {
+        // Engagements included with HOMIES code
         el.innerHTML = `<span class="original">$${base}</span> Included`;
         el.classList.add('discounted');
       } else {
