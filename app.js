@@ -183,7 +183,8 @@ function getReceptionTotal() {
     const minPrice = receptionType === 'indoor' ? 700 : 500;
     if (total < minPrice) total = minPrice;
   } else {
-    if (total < 300) total = 300;
+    const minFull = receptionType === 'indoor' ? 300 : 900;
+    if (total < minFull) total = minFull;
   }
   return total;
 }
