@@ -13,6 +13,12 @@ const categories = {
 // This will be populated by the build script (images.js)
 // Each category gets an array of filenames
 
+// ========== Scroll to top on fresh load ==========
+if (window.location.hash) {
+  history.replaceState(null, '', window.location.pathname);
+}
+window.scrollTo(0, 0);
+
 // ========== Nav scroll effect ==========
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
