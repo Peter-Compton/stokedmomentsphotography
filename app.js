@@ -442,6 +442,31 @@ function skipGate() {
     return;
   }
 
+  function positionGateCard() {
+    // Center the card over the reception + package area
+    const pricing = document.getElementById('pricing');
+    const receptionCard = document.querySelector('.reception-card');
+    const packageCard = document.querySelector('.package-card');
+    if (!receptionCard || !packageCard || !pricing) return;
+
+    const pricingRect = pricing.getBoundingClientRect();
+    const recRect = receptionCard.getBoundingClientRect();
+    const pkgRect = packageCard.getBoundingClientRect();
+
+    // Find the vertical center between top of reception and bottom of package, relative to pricing section
+    const topEdge = recRect.top - pricingRect.top;
+    const bottomEdge = pkgRect.bottom - pricingRect.top;
+    const centerY = (topEdge + bottomEdge) / 2;
+
+    // Position the gate content via padding-top
+    const gateContent = gate.querySelector('.email-gate-content');
+    const cardHeight = gateContent.offsetHeight || 280;
+    const desiredTop = Math.max(80, centerY - cardHeight / 2);
+
+    gate.style.alignItems = 'flex-start';
+    gate.style.paddingTop = desiredTop + 'px';
+  }
+
   let gateTriggered = false;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -449,6 +474,7 @@ function skipGate() {
         gateTriggered = true;
         // Let them glimpse pricing for 1.5s, then blur
         setTimeout(() => {
+          positionGateCard();
           gate.classList.add('active');
         }, 1500);
         observer.disconnect();
